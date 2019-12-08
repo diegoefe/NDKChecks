@@ -13,7 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import org.diegoefe.ndkchecks.Nativa;
 import org.diegoefe.ndkchecks.R;
+
+import java.util.Locale;
 
 public class HomeFragment extends Fragment {
 
@@ -27,7 +30,12 @@ public class HomeFragment extends Fragment {
         btnHello.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeFragment.this.getContext(), "Hola jni", Toast.LENGTH_LONG).show();
+                Nativa nativa = Nativa.instance();
+                Toast.makeText(HomeFragment.this.getContext(), String.format(Locale.getDefault(),
+                        "Usando nativa:\nBuild on %s,\nLog tag is [%s]",
+                                nativa.info(),
+                                nativa.logTag()),
+                        Toast.LENGTH_LONG).show();
             }
         });
         homeViewModel.getText().observe(this, new Observer<String>() {

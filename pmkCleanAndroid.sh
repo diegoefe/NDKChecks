@@ -5,5 +5,6 @@ function cleanAndroidGen()
 	rm -rfv ${base}
 }
 
-cleanAndroidGen app/build
 cleanAndroidGen build
+cleanAndroidGen app/build
+cleanAndroidGen app/.cxx

@@ -2,5 +2,5 @@
     <string name="app_name">NDKChecks</string>
     <string name="title_home">Home</string>
     <string name="title_info">Información</string>
-    <string name="txtHello">Hola JNI</string>
+    <string name="txtHello">JNI info</string>
 </resources>
