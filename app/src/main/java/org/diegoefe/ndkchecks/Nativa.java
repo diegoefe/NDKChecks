@@ -1,5 +1,6 @@
 package org.diegoefe.ndkchecks;
 
+import android.os.Handler;
 import android.util.Log;
 
 public class Nativa {
@@ -27,4 +28,6 @@ public class Nativa {
 
     public native String logTag();
     public native String info();
+    public native void startNativeThreads(Handler handler);
+    public native void stopNativeThreads();
 }
