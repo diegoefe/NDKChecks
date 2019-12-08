@@ -1,0 +1,8 @@
+- En home poner botones:
+   + Crear thread con C++ y notificar a la UI
+      * Con Handler -> callback
+      * Con Handler -> Notification/BroadcastReceiver
+   + Crear thread con java y notificar a la UI:
+      * Con Handler -> callback
+      * Con Handler -> Notification/BroadcastReceiver
+- Mostrar build info
