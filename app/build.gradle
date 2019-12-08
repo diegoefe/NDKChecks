@@ -23,6 +23,7 @@ android {
     }
     buildTypes {
         debug {
+            /*
             debuggable true
             initWith debug
             jniDebuggable true
@@ -31,6 +32,7 @@ android {
                     cFlags "-DDEBUG=1"
                 }
             }
+             */
             ndk { abiFilters "armeabi-v7a" }
             signingConfig signingConfigs.debug
         }

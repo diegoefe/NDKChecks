@@ -3,4 +3,5 @@
     <string name="title_home">Home</string>
     <string name="title_info">Información</string>
     <string name="txtHello">JNI info</string>
+    <string name="txtRunJavaThread">Iniciar Java thread</string>
 </resources>
