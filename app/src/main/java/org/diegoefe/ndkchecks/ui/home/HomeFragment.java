@@ -4,15 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Filter;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -22,23 +19,26 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import org.diegoefe.ndkchecks.Consts;
+import org.diegoefe.ndkchecks.MiCppThreads;
 import org.diegoefe.ndkchecks.MiThread;
 import org.diegoefe.ndkchecks.Nativa;
 import org.diegoefe.ndkchecks.R;
 
 import java.util.Locale;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements MiCppThreads.Callbacks {
 
     private HomeViewModel homeViewModel;
-
-    private MiReceiver receiver = new HomeFragment.MiReceiver();
+    private MiReceiver receiver;
+    private MiCppThreads cppThreads;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =  ViewModelProviders.of(this).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final Context ctx = getContext();
+
+        receiver = new HomeFragment.MiReceiver();
         final Button btnJavaT = root.findViewById(R.id.idJavaThread);
         ctx.registerReceiver(receiver, new IntentFilter(Consts.FilterName));
         btnJavaT.setOnClickListener(new View.OnClickListener(){
@@ -49,13 +49,24 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        final Button btnCppT = root.findViewById(R.id.idCppThread);
-        ctx.registerReceiver(receiver, new IntentFilter(Consts.FilterName));
-        btnCppT.setOnClickListener(new View.OnClickListener(){
+        cppThreads= new MiCppThreads(this);
+        final Button btnCppStart = root.findViewById(R.id.idCppThreadStart);
+        btnCppStart.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(HomeFragment.this.getContext(), "Creando C++ thread!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeFragment.this.getContext(), "Creando C++ threads!", Toast.LENGTH_SHORT).show();
                 //new Thread(new MiThread(ctx)).start();
+                cppThreads.start();
+
+            }
+        });
+        final Button btnCppStop = root.findViewById(R.id.idCppThreadStop);
+        btnCppStop.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeFragment.this.getContext(), "Deteniendo C++ threads!", Toast.LENGTH_SHORT).show();
+                destroyCppThreads();
+
             }
         });
 
@@ -81,10 +92,22 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    private void destroyCppThreads() {
+        if(null != cppThreads) {
+            cppThreads.stop();
+            cppThreads = null;
+        }
+    }
     @Override
     public void onDestroyView() {
         getContext().unregisterReceiver(receiver);
+        destroyCppThreads();
         super.onDestroyView();
+    }
+
+    @Override
+    public void healthMessage(String msg) {
+        Toast.makeText(getContext(), "Health message ["+msg+"]",Toast.LENGTH_SHORT).show();
     }
 
     static class MiReceiver extends BroadcastReceiver {

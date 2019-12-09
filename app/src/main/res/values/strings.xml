@@ -5,4 +5,5 @@
     <string name="txtHello">JNI info</string>
     <string name="txtRunJavaThread">Iniciar Java thread</string>
     <string name="txtRunCppThread">Iniciar C++ thread</string>
+    <string name="txtRunCppThreadStop">Stop C++ threads</string>
 </resources>

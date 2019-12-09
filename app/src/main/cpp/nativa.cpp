@@ -23,7 +23,11 @@ class HealthCheckThread : public JavaThread {
 public:
 	HealthCheckThread(JNIEnv *env_, jobject handlerObj_)
 			: JavaThread(), handlerObj(env_->NewGlobalRef(handlerObj_)) { }
+    ~HealthCheckThread() {
+	    DLG("~HealthCheckThread (%ld)", std::this_thread::get_id());
+	}
 	virtual void onDetach() {
+        DLG("onDetach (%ld)", std::this_thread::get_id());
 		jniEnv()->DeleteGlobalRef(handlerObj);
 	}
 	void sendHealthMessage() {
@@ -40,16 +44,12 @@ public:
 		tt = system_clock::to_time_t(today);
 
 		// Build up the alive message
-		oss << "Thread[" << std::this_thread::get_id() << "] is alive at " << ctime(&tt) <<
-			std::endl;;
+		oss << "Thread[" << std::this_thread::get_id() << "] is alive at " << ctime(&tt) << std::endl;;
 
 		// Build up a Handler Message
-		jobject messagObj = jniEnv()->CallObjectMethod(handlerObj, obtainMId, 0,
-													   jniEnv()->NewStringUTF(
-															   oss.str().c_str()));
+		jobject messagObj = jniEnv()->CallObjectMethod(handlerObj, obtainMId, 0, jniEnv()->NewStringUTF( oss.str().c_str()));
 		// Send the Message to the main UI Thread
-		jmethodID sendMsgMId = jniEnv()->GetMethodID(handlerClass, "sendMessage",
-													 "(Landroid/os/Message;)Z");
+		jmethodID sendMsgMId = jniEnv()->GetMethodID(handlerClass, "sendMessage", "(Landroid/os/Message;)Z");
 
 		bool sent = jniEnv()->CallBooleanMethod(handlerObj, sendMsgMId, messagObj);
 
@@ -73,7 +73,8 @@ public:
 
 namespace {
 
-const int num_threads = 10;
+//const int num_threads = 10;
+const int num_threads = 3;
 JavaThread *threads[num_threads];
 
 } //?
