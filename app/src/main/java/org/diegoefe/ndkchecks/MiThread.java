@@ -23,12 +23,14 @@ public final class MiThread implements Runnable {
         bundle.putString(Consts.Type, Consts.TypeMyThread);
         bundle.putString(Consts.Payload, "NHandler is running");
         msg.setData(bundle);
-        handler_.handleMessage(msg);
+        handler_.sendMessage(msg);
+
         SystemClock.sleep(7000);
         bundle.putString(Consts.Type, Consts.TypeMyThread);
         bundle.putString(Consts.Payload, "NHandler finished");
-        msg.setData(bundle);
-        handler_.handleMessage(msg);
+        Message msg2 =new Message();
+        msg2.setData(bundle);
+        handler_.sendMessage(msg2);
     }
 
     static class NHandler extends Handler {

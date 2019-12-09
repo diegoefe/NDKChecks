@@ -49,6 +49,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        final Button btnCppT = root.findViewById(R.id.idCppThread);
+        ctx.registerReceiver(receiver, new IntentFilter(Consts.FilterName));
+        btnCppT.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(HomeFragment.this.getContext(), "Creando C++ thread!", Toast.LENGTH_SHORT).show();
+                //new Thread(new MiThread(ctx)).start();
+            }
+        });
+
         final Button btnHello = root.findViewById(R.id.idJniHello);
         btnHello.setOnClickListener(new View.OnClickListener(){
             @Override
