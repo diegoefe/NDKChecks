@@ -117,13 +117,13 @@ jint JNI_OnLoad(JavaVM* pVm, void* reserved) {
     nm[1].signature = "()Ljava/lang/String;";
     nm[1].fnPtr = (void*)info;
 
-    nm[1].name = "startNativeThreads";
-    nm[1].signature = "(Landroid/os/Handler;)V";
-    nm[1].fnPtr = (void*)startNativeThreads;
+    nm[2].name = "startNativeThreads";
+    nm[2].signature = "(Landroid/os/Handler;)V";
+    nm[2].fnPtr = (void*)startNativeThreads;
 
-    nm[1].name = "stopNativeThreads";
-    nm[1].signature = "()V";
-    nm[1].fnPtr = (void*)stopNativeThreads;
+    nm[3].name = "stopNativeThreads";
+    nm[3].signature = "()V";
+    nm[3].fnPtr = (void*)stopNativeThreads;
 
 	jclass cls = env->FindClass("org/diegoefe/ndkchecks/Nativa");
 	env->RegisterNatives(cls, nm, numMethods);
