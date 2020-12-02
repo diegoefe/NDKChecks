@@ -16,3 +16,4 @@ Some NDK/JNI/Android tests
 - https://stackoverflow.com/questions/6372102/what-is-the-difference-between-pthread-self-and-gettid-which-one-should-i-u
 - https://medium.com/@unmeshvjoshi/how-java-thread-maps-to-os-thread-e280a9fb2e06
 - https://stackoverflow.com/questions/18056347/jni-calling-java-from-c-with-multiple-threads
+- [Using CheckJNI](https://android-developers.googleblog.com/2011/07/debugging-android-jni-with-checkjni.html)
