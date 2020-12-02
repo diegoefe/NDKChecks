@@ -2,6 +2,12 @@
 
 Some NDK/JNI/Android tests
 
+## Tips
+- To enable CheckJNI run
+  ```bash
+  adb shell setprop debug.checkjni 1
+  ```
+
 ## Specs
 - https://docs.oracle.com/javase/7/docs/technotes/guides/jni/spec/types.html
 - http://journals.ecs.soton.ac.uk/java/tutorial/native1.1/implementing/sync.html
